@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 
+
 namespace EasyStateMachine {
 
     struct Engine {
@@ -15,12 +16,16 @@ namespace EasyStateMachine {
         };
 
         State currentState_;
+        int dotCounts_      = 80;
+        int poundCounts_    = 80;
+        int dotWaitTime_    = 10;
+        int poundWaitTime_  = 20;
 
         State handleDot() {
             std::cout << "Dot Handler Active: ";
-            for (int i = 0; i < 80; ++i) {
+            for (int i = 0; i < dotCounts_; ++i) {
                 std::cout << '.';
-                std::this_thread::sleep_for(std::chrono::milliseconds(10)); // wait for 10ms
+                std::this_thread::sleep_for(std::chrono::milliseconds(dotWaitTime_));
             }
             std::cout << "\n" << "Returning to Idle..." << std::endl;
             return Idle;
@@ -29,9 +34,9 @@ namespace EasyStateMachine {
         
         State handlePound() {
             std::cout << "Pound Handler Active: ";
-            for (int i = 0; i < 80; ++i) {
+            for (int i = 0; i < poundCounts_; ++i) {
                 std::cout << '#' << std::flush;
-                std::this_thread::sleep_for(std::chrono::milliseconds(20)); // wait for 10ms
+                std::this_thread::sleep_for(std::chrono::milliseconds(poundWaitTime_)); 
             }
             std::cout << "\n" << "Returning to Idle..." << std::endl;
             return Idle;
