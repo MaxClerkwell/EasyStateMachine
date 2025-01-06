@@ -12,8 +12,8 @@ enum State {
 };
 
 // Function prototypes
-void handleDot();
-void handlePound();
+State handleDot();
+State handlePound();
 
 int main() {
     State currentState = Idle;
@@ -41,13 +41,11 @@ int main() {
                 break;
 
             case DotHandler:
-                handleDot();
-                currentState = Idle;
+                currentState = handleDot();
                 break;
 
             case PoundHandler:
-                handlePound();
-                currentState = Idle;
+                currentState = handlePound();
                 break;
 
             case Exit:
@@ -59,20 +57,22 @@ int main() {
     return 0;
 }
 
-void handleDot() {
+State handleDot() {
     std::cout << "Dot Handler Active: ";
     for (int i = 0; i < 80; ++i) {
         std::cout << '.';
         std::this_thread::sleep_for(std::chrono::milliseconds(10)); // wait for 10ms
     }
     std::cout << "\nReturning to Idle...\n";
+    return Idle;
 }
 
-void handlePound() {
+State handlePound() {
     std::cout << "Pound Handler Active: ";
     for (int i = 0; i < 80; ++i) {
         std::cout << '#' << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(20)); // wait for 20ms
     }
     std::cout << "\nReturning to Idle...\n";
+    return Idle;
 }
