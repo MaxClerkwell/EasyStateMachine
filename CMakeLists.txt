@@ -7,5 +7,8 @@ project(StateMachineDemo)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Unterordner "src" hinzufügen
+# Unterordner "include" hinzufügen
+include_directories(include)
+
+
 add_executable(StateMachineDemo src/main.cpp)

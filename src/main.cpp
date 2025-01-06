@@ -2,6 +2,7 @@
 #include <string>
 #include <thread>
 #include <chrono>
+#include "pound_engine.hpp"
 
 
 namespace EasyStateMachine {
@@ -33,25 +34,30 @@ namespace EasyStateMachine {
 
         
         State handlePound() {
-            std::cout << "Pound Handler Active: ";
-            for (int i = 0; i < poundCounts_; ++i) {
-                std::cout << '#' << std::flush;
-                std::this_thread::sleep_for(std::chrono::milliseconds(poundWaitTime_)); 
+            PoundEngine engine;
+            while (engine.run() != PoundEngine::SubExit) {
+                // Stay in sub-state machine
             }
-            std::cout << "\n" << "Returning to Idle..." << std::endl;
+
+            std::cout << "\nReturning to Idle...\n";
             return Idle;
         }
 
-        State runIdle() {
-            char userInput;
-
-            std::cout << "\nIdle Menu:\n";
+        char menu() {
+            system("clear");
+            std::cout << "Idle Menu:\n";
             std::cout << "Enter '.' to switch to Dot Handler.\n";
             std::cout << "Enter '#' to switch to Pound Handler.\n";
             std::cout << "Enter 'e' to Exit.\n";
             std::cout << "Your choice: ";
-            std::cin >> userInput;
+            
+            char input;
+            std::cin >> input;
+            return input;
+        }
 
+        State runIdle() {
+            char userInput = menu();
             if (userInput == '.') {
                 return DotHandler;
             } else if (userInput == '#') {
@@ -82,6 +88,7 @@ namespace EasyStateMachine {
                     break;
                 }
             }
+            system("clear");
             return 0;
         }
 
